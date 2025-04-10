@@ -203,9 +203,10 @@ server <- function(input, output) {
           path = file,
           col_names = TRUE,
           format_headers = TRUE),
-        csv = export_csv(
-          points_table(),
-          filename = file)
+        csv = readr::write_csv2(
+          x = points_table(),
+          file = file,
+          append = FALSE)
       )
     }
   )
