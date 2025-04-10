@@ -2,8 +2,7 @@
 library(shiny)
 library(bslib)
 library(bsicons)
-library(tmap)
-tmap_mode("view")
+library(leaflet)
 
 # dependencias -----
 source("R/files_handler.R")
@@ -92,10 +91,16 @@ ui <- page_sidebar(
     ### mapa -----
     nav_panel(
       "Mapa",
-      tmapOutput(
+      leafletOutput(
         "map_plot"
         # mode = "view"
       )
+    ),
+
+    ### medições -----
+    tabPanel(
+      "Medições",
+      tableOutput("sizes_table")
     ),
 
     ### file -----
@@ -140,19 +145,12 @@ server <- function(input, output) {
       expand_points()
   })
 
-  # geo <- reactive({
-  #   data() |>
-  #     _$sf_content |>
-  #     tm_shape(
-  #       name = "Áreas do KML",
-  #       crs = "auto") +
-  #     tm_polygons(
-  #       "Name",
-  #       fill_alpha = .6)
-  # })
-
   geo <- reactive({
     map_object(data()$sf_content)
+  })
+
+  areas_summary <- reactive({
+    sizes_table(data()$sf_content)
   })
 
   out_type <- reactive({
@@ -178,8 +176,17 @@ server <- function(input, output) {
     colnames = TRUE,
     spacing = "s")
 
-  output$map_plot <- renderTmap(
+  output$map_plot <- renderLeaflet(
     geo()
+  )
+
+  output$sizes_table <- renderTable(
+    areas_summary(),
+    striped = TRUE,
+    hover = TRUE,
+    digits = 2,
+    colnames = TRUE,
+    spacing = "s"
   )
 
   output$download_file <- downloadHandler(
