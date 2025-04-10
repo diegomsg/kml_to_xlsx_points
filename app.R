@@ -195,9 +195,14 @@ server <- function(input, output) {
     content = function(file) {
       switch(
         out_type(),
-        xlsx = export_xlsx(
-          points_table(),
-          filename = file),
+        xlsx = writexl::write_xlsx(
+          x = list(
+            pontos = points_table(),
+            resumo = areas_summary()
+          ),
+          path = file,
+          col_names = TRUE,
+          format_headers = TRUE),
         csv = export_csv(
           points_table(),
           filename = file)
