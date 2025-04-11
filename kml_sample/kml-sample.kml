@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>kml-sample</name>
+    <Folder>
+      <name>kml-sample</name>
+      <Placemark>
+        <name>Polygon</name>
+		<description></description>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>
+                -122.366278,37.818844
+                -122.365704,37.819267
+                -122.365248,37.819761
+                -122.364928,37.820206
+                -122.364899,37.820446
+                -122.365357,37.820951
+                -122.365842,37.821424
+                -122.366212,37.821939
+                -122.366519,37.822498
+                -122.366778,37.823104
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
