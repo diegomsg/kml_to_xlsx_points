@@ -1,4 +1,5 @@
 map_object <- function(geodata, layername = "Áreas do KML", alpha = .6) {
+  require(leaflet)
 
   is_compatible_geom <- function(geom, compatible_types = c("MULTIPOLYGON", "POLYGON")) {
     geom_type <- sf::st_geometry_type(geom)
@@ -53,11 +54,13 @@ map_object <- function(geodata, layername = "Áreas do KML", alpha = .6) {
 }
 
 sizes_table <- function(geodata) {
+  require(dplyr)
+
   geodata |>
-    rename(
+    dplyr::rename(
       Nome = Name,
       Descrição = Description) |>
-    mutate(
+    dplyr::mutate(
       geometry = sf::st_make_valid(geometry),
       "Vértices" = sapply(geometry, \(x) {
         sf::st_coordinates(x) |>
